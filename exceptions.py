@@ -1,0 +1,3 @@
+
+class FilledSquareException(Exception):
+    pass

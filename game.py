@@ -11,10 +11,3 @@ class LogicalBoard:
             self._board[square_number] = value
         else:
             raise FilledSquareException('Square is Occupied')
-
-    def _show_board(self):
-        print(self._board)
-
-
-
-
