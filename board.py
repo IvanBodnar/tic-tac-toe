@@ -21,7 +21,7 @@ class LogicalBoard:
         return self._board
 
     @staticmethod
-    def is_winning_combination(combination: tuple) -> bool:
+    def is_winning_combination(combination: set) -> bool:
         return combination in WINNING_COMBINATIONS
 
     def __str__(self):
@@ -30,14 +30,14 @@ class LogicalBoard:
 
 class PhysicalBoard:
     def __init__(self, logical_board: LogicalBoard):
-        self._logical_board = logical_board
+        self.logical_board = logical_board
 
     def draw(self):
-        board_state = self._logical_board.state
+        board_state = self.logical_board.state
         print('|', board_state.get(0) or 0, '|', board_state.get(1) or 1, '|', board_state.get(2) or 2, '|')
         print('|', board_state.get(3) or 3, '|', board_state.get(4) or 4, '|', board_state.get(5) or 5, '|')
         print('|', board_state.get(6) or 6, '|', board_state.get(7) or 7, '|', board_state.get(8) or 8, '|')
 
     def send_move(self, square: str, value: str):
-        self._logical_board.fill_square(square, value)
+        self.logical_board.fill_square(square, value)
         self.draw()
