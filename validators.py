@@ -1,7 +1,8 @@
-from exceptions import MoveNotInRange
+from exceptions import MoveNotInRangeException
 
 
 def validate_user_input(user_input):
-    int(user_input)
-    if user_input not in range(9):
-        raise MoveNotInRange
+    _user_input = int(user_input)
+    if _user_input not in range(9):
+        raise MoveNotInRangeException
+    return _user_input
