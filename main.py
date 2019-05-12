@@ -1,28 +1,35 @@
-from board import LogicalBoard, PhysicalBoard, WINNING_COMBINATIONS
+from board import LogicalBoard, PhysicalBoard
 from game import Manager
 from validators import validate_user_input
 from exceptions import MoveNotInRangeException, FilledSquareException
 
 
-logical_board = LogicalBoard()
-physical_board = PhysicalBoard(logical_board)
-manager = Manager(physical_board)
+def init():
+    logical_board = LogicalBoard()
+    physical_board = PhysicalBoard(logical_board)
+    manager = Manager(physical_board)
 
-manager.init_board()
+    manager.init_board()
+
+    while True:
+        try:
+            move = validate_user_input(input('Enter move\n'))
+        except ValueError:
+            print('Must enter an integer')
+            continue
+        except MoveNotInRangeException:
+            print('Must enter a value between 0 and 8')
+            continue
+        except FilledSquareException:
+            print('That square is filled. Choose another one')
+            continue
+
+        manager.register_move(move, 'o')
+        win = manager.get_winner()
+        if win:
+            print(win.player + ' wins')
+            break
 
 
-while True:
-    try:
-        move = validate_user_input(input('Enter move\n'))
-    except ValueError:
-        print('Must enter an integer')
-        continue
-    except MoveNotInRangeException:
-        print('Must enter a value between 0 and 8')
-        continue
-    except FilledSquareException:
-        print('That square is filled. Choose another one')
-        continue
-
-    manager.register_move(move, 'x')
-
+if __name__ == '__main__':
+    init()
