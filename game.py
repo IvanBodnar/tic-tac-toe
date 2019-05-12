@@ -1,3 +1,5 @@
+from random import choice
+
 from exceptions import FilledSquareException
 
 
@@ -14,9 +16,24 @@ WINNING_COMBINATIONS = (
 
 
 class Player:
-    def __init__(self, name, combination=None):
-        self.name = name
-        self.combination = combination
+    def __init__(self):
+        self.name = None
+        self.sign = None
+        self.combination = None
+
+
+class Human(Player):
+    def __init__(self):
+        super().__init__()
+        self.sign = 'x'
+        self.name = 'human'
+
+
+class Computer(Player):
+    def __init__(self):
+        super().__init__()
+        self.sign = 'o'
+        self.name = 'computer'
 
 
 class Manager:
@@ -24,7 +41,7 @@ class Manager:
         self._board = physical_board
         self._human_moves = []
         self._computer_moves = []
-        self._current_turn = None
+        self._current_turn = self._set_random_turn()
 
     def init_board(self):
         self._board.draw()
@@ -39,22 +56,28 @@ class Manager:
         human_winning_combination = self.is_winning_combination(set(self._human_moves))
         computer_winning_combination = self.is_winning_combination(set(self._computer_moves))
         if human_winning_combination:
-            return Player('human', human_winning_combination)
+            return Human()
         elif computer_winning_combination:
-            return Player('computer', computer_winning_combination)
+            return Computer()
         else:
             return None
 
-    def register_move(self, square: str, value: str):
+    def register_move(self, square: str):
+        current_sign = self._current_turn.sign
         try:
-            self._board.send_move(square, value)
-            self._human_moves.append(square) if value == 'x' else self._computer_moves.append(square)
+            self._board.send_move(square, current_sign)
+            self._human_moves.append(square) if current_sign == 'x' else self._computer_moves.append(square)
+            self._flip_turn()
         except FilledSquareException:
             raise
 
-    # def _set_random_turn(self):
-    #     return (Player('human'), Player('computer'))
+    @staticmethod
+    def _set_random_turn() -> Player:
+        return choice((Human(), Computer()))
 
-    def flip_turn(self):
-        pass
+    def _flip_turn(self):
+        if isinstance(self._current_turn, Human):
+            self._current_turn = Computer()
+        elif isinstance(self._current_turn, Computer):
+            self._current_turn = Human()
 

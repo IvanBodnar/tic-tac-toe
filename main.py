@@ -24,10 +24,10 @@ def init():
             print('That square is filled. Choose another one')
             continue
 
-        manager.register_move(move, 'o')
+        manager.register_move(move)
         win = manager.get_winner()
         if win:
-            print(win.player + ' wins')
+            print(win.name + ' wins')
             break
 
 
