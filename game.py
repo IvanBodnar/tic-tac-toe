@@ -27,7 +27,8 @@ class LogicalBoard:
     def get_filled_squares(self):
         return self._filled_squares
 
-    def get_board(self):
+    @property
+    def state(self):
         return self._board
 
     def check_is_winning_combination(self, combination):
@@ -36,6 +37,3 @@ class LogicalBoard:
 
     def __str__(self):
         return str(self._board)
-
-
-
