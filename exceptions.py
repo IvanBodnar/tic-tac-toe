@@ -3,5 +3,5 @@ class FilledSquareException(Exception):
     pass
 
 
-class MoveNotInRange(Exception):
+class MoveNotInRangeException(Exception):
     pass
