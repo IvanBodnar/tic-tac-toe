@@ -48,3 +48,10 @@ class PhysicalBoard:
         print('|', board.get(0) or 0, '|', board.get(1) or 1, '|', board.get(2) or 2, '|')
         print('|', board.get(3) or 3, '|', board.get(4) or 4, '|', board.get(5) or 5, '|')
         print('|', board.get(6) or 6, '|', board.get(7) or 7, '|', board.get(8) or 8, '|')
+
+    def register_move(self, square, value):
+        try:
+            self._logical_board.fill_square(square, value)
+            self.draw()
+        except FilledSquareException:
+            raise
