@@ -1,4 +1,3 @@
-from game import WINNING_COMBINATIONS
 from exceptions import FilledSquareException
 
 
@@ -19,10 +18,6 @@ class LogicalBoard:
     @property
     def state(self):
         return self._board
-
-    @staticmethod
-    def is_winning_combination(combination: set) -> bool:
-        return combination in WINNING_COMBINATIONS
 
     def __str__(self):
         return str(self._board)
