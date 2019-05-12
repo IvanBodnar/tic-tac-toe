@@ -29,7 +29,8 @@ class Manager:
 
     @staticmethod
     def is_winning_combination(combination: set) -> set:
-        if combination in WINNING_COMBINATIONS:
+        is_win = len([winning_comb for winning_comb in WINNING_COMBINATIONS if winning_comb <= combination]) > 0
+        if is_win:
             return combination
 
     def get_winner(self):
