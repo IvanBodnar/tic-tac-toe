@@ -18,7 +18,7 @@ class LogicalBoard:
         self._board = {x: None for x in range(9)}
         self._filled_squares = set()
 
-    def fill_square(self, square_number, value):
+    def fill_square(self, square_number: str, value: str):
         if square_number in self._filled_squares:
             raise FilledSquareException()
         self._board[square_number] = value
@@ -44,10 +44,10 @@ class PhysicalBoard:
         self._logical_board = logical_board
 
     def draw(self):
-        board = self._logical_board.state
-        print('|', board.get(0) or 0, '|', board.get(1) or 1, '|', board.get(2) or 2, '|')
-        print('|', board.get(3) or 3, '|', board.get(4) or 4, '|', board.get(5) or 5, '|')
-        print('|', board.get(6) or 6, '|', board.get(7) or 7, '|', board.get(8) or 8, '|')
+        board_state = self._logical_board.state
+        print('|', board_state.get(0) or 0, '|', board_state.get(1) or 1, '|', board_state.get(2) or 2, '|')
+        print('|', board_state.get(3) or 3, '|', board_state.get(4) or 4, '|', board_state.get(5) or 5, '|')
+        print('|', board_state.get(6) or 6, '|', board_state.get(7) or 7, '|', board_state.get(8) or 8, '|')
 
     def send_move(self, square: str, value: str):
         self._logical_board.fill_square(square, value)
