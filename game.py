@@ -1,5 +1,3 @@
-from collections import namedtuple
-
 from exceptions import FilledSquareException
 
 
@@ -15,7 +13,10 @@ WINNING_COMBINATIONS = (
 )
 
 
-Winner = namedtuple('Winner', 'player combination')
+class Player:
+    def __init__(self, name, combination=None):
+        self.name = name
+        self.combination = combination
 
 
 class Manager:
@@ -23,6 +24,7 @@ class Manager:
         self._board = physical_board
         self._human_moves = []
         self._computer_moves = []
+        self._current_turn = None
 
     def init_board(self):
         self._board.draw()
@@ -37,9 +39,9 @@ class Manager:
         human_winning_combination = self.is_winning_combination(set(self._human_moves))
         computer_winning_combination = self.is_winning_combination(set(self._computer_moves))
         if human_winning_combination:
-            return Winner('human', human_winning_combination)
+            return Player('human', human_winning_combination)
         elif computer_winning_combination:
-            return Winner('computer', computer_winning_combination)
+            return Player('computer', computer_winning_combination)
         else:
             return None
 
@@ -49,3 +51,10 @@ class Manager:
             self._human_moves.append(square) if value == 'x' else self._computer_moves.append(square)
         except FilledSquareException:
             raise
+
+    # def _set_random_turn(self):
+    #     return (Player('human'), Player('computer'))
+
+    def flip_turn(self):
+        pass
+
