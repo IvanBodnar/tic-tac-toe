@@ -20,7 +20,7 @@ class LogicalBoard:
 
     def fill_square(self, square_number, value):
         if square_number in self._filled_squares:
-            raise FilledSquareException('Square is Filled')
+            raise FilledSquareException()
         self._board[square_number] = value
         self._filled_squares.add(square_number)
 
@@ -31,9 +31,9 @@ class LogicalBoard:
     def state(self):
         return self._board
 
-    def check_is_winning_combination(self, combination):
-        if combination in WINNING_COMBINATIONS:
-            return {self._board.get(key) for key in combination}
+    @staticmethod
+    def is_winning_combination(combination: tuple) -> bool:
+        return combination in WINNING_COMBINATIONS
 
     def __str__(self):
         return str(self._board)
@@ -49,9 +49,6 @@ class PhysicalBoard:
         print('|', board.get(3) or 3, '|', board.get(4) or 4, '|', board.get(5) or 5, '|')
         print('|', board.get(6) or 6, '|', board.get(7) or 7, '|', board.get(8) or 8, '|')
 
-    def register_move(self, square, value):
-        try:
-            self._logical_board.fill_square(square, value)
-            self.draw()
-        except FilledSquareException:
-            raise
+    def send_move(self, square: str, value: str):
+        self._logical_board.fill_square(square, value)
+        self.draw()
