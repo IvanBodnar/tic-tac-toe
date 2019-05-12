@@ -1,11 +1,14 @@
 from board import LogicalBoard, PhysicalBoard, WINNING_COMBINATIONS
+from game import Manager
 from validators import validate_user_input
-from exceptions import MoveNotInRangeException
+from exceptions import MoveNotInRangeException, FilledSquareException
 
 
-b = LogicalBoard()
-p = PhysicalBoard(b)
-p.draw()
+logical_board = LogicalBoard()
+physical_board = PhysicalBoard(logical_board)
+manager = Manager(physical_board)
+
+manager.init_board()
 
 
 while True:
@@ -17,6 +20,9 @@ while True:
     except MoveNotInRangeException:
         print('Must enter a value between 0 and 8')
         continue
+    except FilledSquareException:
+        print('That square is filled. Choose another one')
+        continue
 
-    p.register_move(move, 'x')
+    manager.register_move(move, 'x')
 
