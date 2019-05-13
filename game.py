@@ -73,7 +73,8 @@ class Manager:
 
     @staticmethod
     def _set_random_turn() -> Player:
-        return choice((Human(), Computer()))
+        # return choice((Human(), Computer()))
+        return Human()
 
     def _flip_turn(self):
         if isinstance(self._current_turn, Human):
